@@ -13,7 +13,7 @@ function W = fastICA(X, measure, maxIter, epsilon)
 % Author: Elias Kokkinis
 % e-mail: elias@accusonus.com
 %
-% ...
+% If you find any bugs, please let me know!
 
 % Extract dimension
 [N, samples] = size(X);

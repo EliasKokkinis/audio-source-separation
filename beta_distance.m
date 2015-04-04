@@ -13,7 +13,7 @@ function d = beta_distance(X, Y, beta)
 % Author: Elias Kokkinis
 % e-mail: elias@accusonus.com
 %
-% ...
+% If you find any bugs, please let me know!
 if nargin < 3
     error('Three input arguments are required!');
 end

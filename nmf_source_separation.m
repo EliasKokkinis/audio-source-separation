@@ -1,11 +1,12 @@
 %% NMF based source separation
 clear; close all; clc;
+delete('./*.wav');
 
 %% Parameters
-inputFile = '../piano.wav';
+inputFile = '../audio/p4.wav';
 % STFT parameters
 windowLength = 2048;
-hopSize = 512;
+hopSize = 1024;
 analysisWindow  = hamming(windowLength, 'periodic');
 synthesisWindow = hanning(windowLength, 'periodic')./hamming(windowLength, 'periodic');
 
@@ -22,8 +23,8 @@ V = abs(X(1:end/2 + 1, :)).^2;
 V(V<=0) = 1e-12;
 
 %% NMF
-K = 5;
-beta = 1;
+K = 4;
+beta = 0;
 lambda = 1;
 % Perform NMF
 [W, H, J] = nmf(V, K, 100, 0, beta, lambda, [], []);
@@ -39,4 +40,6 @@ for k = 1 : K
    outputFrames = real(ifft([mask;mask(end-1:-1:2, :)].*X));
    % Synthesize signal
    component(:, k) = ows(outputFrames, hopSize, synthesisWindow);
+   % Write audio
+   audiowrite(sprintf('cmp%02d.wav', k), component(:, k), sampleRate);
 end

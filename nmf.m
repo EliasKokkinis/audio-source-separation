@@ -18,7 +18,7 @@ function [W, H, J] = nmf(V, K, nIterations, epsilon, beta, lambda, W0, H0)
 % Author: Elias Kokkinis
 % e-mail: elias@accusonus.com
 %
-% ...
+% If you find any bugs, please let me know!
 
 % Extract data dimensions
 [F, N] = size(V);

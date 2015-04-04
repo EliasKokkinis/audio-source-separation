@@ -1,6 +1,6 @@
 %% Clean-up
 clear; close all; clc;
-load ICA_dataset.mat
+load ICA_dataset_3.mat
 
 %% Pre-processing
 % Extract dimensions
@@ -28,7 +28,5 @@ B = fastICA(Z, 'kurtosis', 100, 1e-6);
 %% Post-processing
 % Unmixing matrix
 W = B'*Tw;
-% Mixing matrix
-Ah = Td*B;
 % Separated signals (don't forget to add back the mean!)
 Y = W*X + (W*M);
