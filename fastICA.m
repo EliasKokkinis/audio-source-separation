@@ -1,10 +1,9 @@
-function W = fastICA(X, nonLin, maxIter, epsilon)
+function W = fastICA(X, measure, maxIter, epsilon)
 % This function implementes the FastICA method
 %
 % INPUTS
 %   X       - The preprocessed input data (N x samples)
-%   nonLin  - The non-linearity/the measure to maximize ('kurtosis' or
-%   'negentropy'
+%   measure - The measure to maximize ('kurtosis' or 'negentropy')
 %   maxIter - The maximum number of iterations
 %   epsilon - The minimum change between iterations
 %
@@ -19,11 +18,9 @@ function W = fastICA(X, nonLin, maxIter, epsilon)
 % Extract dimension
 [N, samples] = size(X);
 % Random initialization
-W = orth(randn(N));
+W = randn(N);
 % Previous estimation
 W_old = zeros(size(W));
-
-a1 = 1;
 
 for i = 1 : maxIter
     % Symmetric orthogonalization.
@@ -37,12 +34,12 @@ for i = 1 : maxIter
     
     W_old = W;
     
-    switch nonLin
+    switch measure
         case 'kurtosis'
-            W = X*(X'*W).^3 - 3*W;
+            W = X*(X'*W).^3 - 3*(ones(N, 1)*mean((X'*W).^2))*W;
         case 'negentropy'
-            hypTan = tanh(a1 * X' * W);
-            W = X*hypTan/samples - ones(N, 1)*sum(1 - hypTan.^2).*W/samples*a1;
+            hypTan = tanh(X'*W);
+            W = X*hypTan/samples - ones(N, 1)*sum(1 - hypTan.^2).*W/samples;
         otherwise
             error('Unsupported non-linearity');
     end
