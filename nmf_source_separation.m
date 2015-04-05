@@ -3,10 +3,10 @@ clear; close all; clc;
 delete('./*.wav');
 
 %% Parameters
-inputFile = '../audio/p4.wav';
+inputFile = '../audio/DL7.wav';
 % STFT parameters
-windowLength = 2048;
-hopSize = 1024;
+windowLength = 1024;
+hopSize = 256;
 analysisWindow  = hamming(windowLength, 'periodic');
 synthesisWindow = hanning(windowLength, 'periodic')./hamming(windowLength, 'periodic');
 
@@ -23,7 +23,7 @@ V = abs(X(1:end/2 + 1, :)).^2;
 V(V<=0) = 1e-12;
 
 %% NMF
-K = 4;
+K = 3;
 beta = 0;
 lambda = 1;
 % Perform NMF

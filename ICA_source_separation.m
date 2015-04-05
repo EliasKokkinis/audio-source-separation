@@ -20,10 +20,10 @@ Tw = inv(sqrtD)*E';
 Td = E*sqrtD;
 
 % Whiten the data
-Z = Tw*X;
+Z = Tw*Xn;
 
 %% FastICA
-B = fastICA(Z, 'kurtosis', 100, 1e-6);
+B = fastICA(Z, 'negentropy', 100, 1e-6);
 
 %% Post-processing
 % Unmixing matrix
